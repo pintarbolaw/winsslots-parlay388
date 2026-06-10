@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="https://cdn.mixlink.top/global/seamless/510/IDR/logo/163409698.png" rel="icon" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  
+  <title>JP HARIAN SLOT</title>
+
+  <style>
+    body{
+      margin:0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(120deg, #0f0f0f, #1a1a1a);
+      color:white;
+      
+      /* ANTI COPAS & SELEKSI TEKS */
+      -webkit-user-select: none; /* Safari */
+      -ms-user-select: none; /* IE 10+ */
+      user-select: none; /* Standar (Chrome, Firefox, Opera) */
+    }
+
+    /* HEADER & LOGO */
+    header{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px; 
+      padding:20px;
+      font-size:24px;
+      font-weight:bold;
+      color:#00ffcc;
+      text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+    }
+
+    header img {
+      height: 50px; 
+      width: auto;
+      object-fit: contain;
+    }
+
+    /* RUNNING TEXT */
+    .marquee{
+      background:#111;
+      padding:10px;
+      overflow:hidden;
+      white-space:nowrap;
+      border-top:1px solid #00ffcc;
+      border-bottom:1px solid #00ffcc;
+    }
+
+    .marquee span{
+      display:inline-block;
+      padding-left:100%;
+      animation: run 10s linear infinite;
+      color:#00ffcc;
+    }
+
+    @keyframes run{
+      0%{transform:translateX(0);}
+      100%{transform:translateX(-100%);}
+    }
+
+    /* BADGE VERIFIED GLOBAL */
+    .verified-container {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 255, 204, 0.1);
+      border: 1px solid #00ffcc;
+      color: #00ffcc;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+      text-shadow: 0 0 5px #00ffcc;
+      box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+    }
+
+    .verified-icon {
+      background: #00ffcc;
+      color: #111;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    /* CONTAINER */
+    .container{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin-top:10px;
+      padding: 10px;
+      min-height: 500px;
+    }
+
+    /* CARD */
+    .card{
+      background:#111;
+      width: 260px; 
+      margin:15px;
+      border-radius:12px;
+      overflow:hidden;
+      border:1px solid #00ffcc;
+      box-shadow: 0 0 15px rgba(0,255,204,0.3);
+      transition:0.3s;
+      display: none; 
+    }
+
+    .card.show {
+      display: block;
+    }
+
+    .card:hover{
+      transform:scale(1.05);
+      box-shadow: 0 0 25px #00ffcc;
+    }
+
+    .card img{
+      width:100%;
+      height:200px;
+      object-fit:cover;
+      display: block;
+      cursor: pointer; 
+      
+      /* ANTI DRAG GAMBAR (Gak bisa ditarik/didownload sembarangan) */
+      -webkit-user-drag: none;
+      user-drag: none;
+    }
+
+    .card h3{
+      margin:12px 10px 5px 10px;
+      color:#00ffcc;
+      font-size: 18px;
+    }
+
+    /* KETERANGAN TANGGAL */
+    .card-date {
+      font-size: 11px;
+      color: #888;
+      margin: 0 10px 12px 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn{
+      display:block;
+      margin:10px;
+      padding:12px 10px;
+      background: linear-gradient(45deg, #00ffcc, #0066ff);
+      color:white;
+      text-decoration:none;
+      border-radius:8px;
+      text-align:center;
+      font-weight:bold;
+      box-shadow:0 0 10px #00ffcc;
+      font-size: 14px;
+    }
+
+    .btn:hover{
+      box-shadow:0 0 20px #00ffcc;
+    }
+
+    /* PAGINATION STYLING */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin: 30px 0;
+    }
+
+    .pagination button {
+      background: #111;
+      color: #00ffcc;
+      border: 1px solid #00ffcc;
+      padding: 12px 20px; 
+      margin: 0 8px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .pagination button.active, .pagination button:hover {
+      background: #00ffcc;
+      color: #111;
+      box-shadow: 0 0 10px #00ffcc;
+    }
+
+    /* STYLE LIGHTBOX */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 8px;
+      border: 2px solid #00ffcc;
+      box-shadow: 0 0 30px #00ffcc;
+      -webkit-user-drag: none;
+      user-drag: none;
+    }
+
+    .lightbox .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: #00ffcc;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      text-shadow: 0 0 10px #00ffcc;
+    }
+
+    /* FOOTER */
+    footer{
+      text-align:center;
+      padding:25px 20px;
+      margin-top:30px;
+      color:#888;
+      font-size:13px;
+      border-top: 1px solid #222;
+    }
+
+    /* TAMPILAN HP */
+    @media (max-width: 600px) {
+      header {
+        font-size: 18px; 
+        padding: 15px;
+      }
+      header img {
+        height: 35px;
+      }
+      .card {
+        width: calc(50% - 16px); 
+        margin: 8px; 
+      }
+      .card img {
+        height: 120px; 
+      }
+      .card h3 {
+        font-size: 14px; 
+        margin: 8px 8px 4px 8px;
+      }
+      .btn {
+        margin: 8px;
+        padding: 8px 5px;
+        font-size: 12px; 
+      }
+    }
+
+  </style>
+</head>
+
+<body oncontextmenu="return false;">
+
+<header>
+  <img src="https://cdn.mixlink.top/global/seamless/510/IDR/logo/163409698.png" alt="Logo"> <span>🔥 JP HARIAN SLOT PARLAY388</span>
+</header>
+
+<div class="marquee">
+  <span>🔥 Daily Maxwin Harian • Slot & Sportbook Gacor Aman Dan Terpercaya • Bonus Depo 10% Setiap Hari • Deposit Mudah via QRIS • Proses Deposit & Withdraw Tercepat • Hanya di PARLAY388 🔥 🔥</span>
+</div>
+
+<div class="verified-container">
+  <div class="verified-badge">
+    <span class="verified-icon">✓</span> Situs Resmi Terverifikasi Aman Teroercaya
+  </div>
+</div>
+
+<div class="container" id="product-container">
+
+  <div class="card">
+    <img src="https://blogger.googleusercontent.com/img/a/AVvXsEg-FMzhyjX8a7y8gwY5jFYrSKPSMkSfXEpl1yXjKjXPCCG7HJBG-w6KaSwIOE5VyUhQskBNnuo2bH6taaZyJ62LWwXhcFdedqzopgoNONgsmDGLZ-ThWjWBXrD3oQvALg6PamXq65FpNyrtSrF1jOKEqq_V_YUfpN0lhJWywkihs0oIsSdy2ZZMTLeN0tYF" onclick="zoomImg(this)">
+	<img src="https://blogger.googleusercontent.com/img/a/AVvXsEhRBFSGaGuh77YDCt-5tqllgSgYx1eSSn0FcJINw6mR23pyfFZt2QnZtoKIba3wauI17z3iaVdwqcSh9lYh-gItIwSSLE1Ki0h1Bwm3dz-3cUa5PRV1V_T3Bci3ICUa-8pUE3BDpZeug1L-9QrcCdkc82ZSP01KPDhabneAhcUGdU4TMijlEaXuafke88cR" onclick="zoomImg(this)">
+    <h3>SWEET BONANZA 1000 BUY SPIN 200RB JADI 21.744.100,00 JUTA !</h3>
+    <div class="card-date">📅 Update: 11 Juni 2026</div>
+    <a class="btn" href="https://parlaysaka.com/">LOGIN</a>
+  </div>
+  <div class="card">
+    <img src="https://blogger.googleusercontent.com/img/a/AVvXsEixtUhXhEpTEt98x5plcIEH9BXuhRduj4OTqTofTVoGvnM4vcF2aNxEkepjLRDRhYLo0FY7fctEQjvt8H6toBC07Qqf2fBiZ2o1PZIEYL_UlFkPFBzniRQXndYRr8r2-K8TwGpYIMXsZKlgTHMln-g9aD5obajzvDqmxKYR8dNhwlNl4D6f5v3UHzsxRRTp" onclick="zoomImg(this)">
+	<img src="https://blogger.googleusercontent.com/img/a/AVvXsEgckb41_7x5vG_edb7NNVRQyB7iuXC2NYuKZ5-OD7TexD-RKMpOETok9s4voOITmQq0Tw6aN0WgAlP6M8BimW5UooykKHAzgmxYNoB7vteP4U_gj7m3XlAYGjXqWr_lziyCxGabpedP-cI5jt158W44u41i9IudPeuaZEA7PYlgj4iYOcWhkgXd8vpJv7AO" onclick="zoomImg(this)">
+    <h3>GATES OF OLYMPUS 1000 BUY SPIN 300RB JADI 8.549.700,00 JUTA !</h3>
+    <div class="card-date">📅 Update: 11 Juni 2026</div>
+    <a class="btn" href="https://parlaysaka.com/">LOGIN</a>
+  </div>
+  <div class="card">
+    <img src="https://blogger.googleusercontent.com/img/a/AVvXsEgGi8taQJAqDUcxg_3YqTtJLDWpXXIAGmOMCwECMNNbAh-PMXJggCFTjOPsNFMK-0UMMzooFi3_FcaGrT0ncysLaUi9ZhSxuXYtvVW3pqemULGOl3NdCTa_YxwaNQF4PI2qMnhCOQ6WELyDeJFXBCzo3qA0M223R0bsERJ-UxP9AbLW9xdWMuBkBkzPrmri" onclick="zoomImg(this)">
+	<img src="https://blogger.googleusercontent.com/img/a/AVvXsEhnj0HTDdvO6qkrFJDApIBrdhv6Ik5z343mZjrHvFOydT12j3ebarddPA0f0afKv7_ZX6AxDGEkHkofonwDfxv0F6D9_su2R6eIXle_ckVrwzDQcXLr2yUjBMh1fn-X6jUGWjEBwsIzmfzHtTLGwkROaFnVhSBIr0F9ysohS4_PlNY5dJahmD_T-wkhpC7W" onclick="zoomImg(this)">
+    <h3>MAHJONG WAYS 2 BET 800 JACKPOT 6.154.670,00 JUTA ! </h3>
+    <div class="card-date">📅 Update: 11 Juni 2026</div>
+    <a class="btn" href="https://parlaysaka.com/">LOGIN</a>
+  </div>
+  <div class="card">
+    <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjVS-GscJFfyYkqFowQ18Hvg0yOfKJmZD_IEmwyFgvCNPRphGqrDqKX9Q-zzdTRKYLdluvSAhxWuFkUuSiMLjzC8-xvM35IJ7XAZvuhBemCT82FdhOS0N_JOs0a_ehwqe-hBo0fjQRtnF1GXomfC9Rp1hJYQOnW09TfJOFPNvgDha3-E4sqHoDf18hciQlm" onclick="zoomImg(this)">
+	<img src="https://blogger.googleusercontent.com/img/a/AVvXsEjVS-GscJFfyYkqFowQ18Hvg0yOfKJmZD_IEmwyFgvCNPRphGqrDqKX9Q-zzdTRKYLdluvSAhxWuFkUuSiMLjzC8-xvM35IJ7XAZvuhBemCT82FdhOS0N_JOs0a_ehwqe-hBo0fjQRtnF1GXomfC9Rp1hJYQOnW09TfJOFPNvgDha3-E4sqHoDf18hciQlm" onclick="zoomImg(this)">
+    <h3>MAHJONG WAYS 1 BET 1200 JACKPOT 3.240.080,00 JUTA ! </h3>
+    <div class="card-date">📅 Update: 11 Juni 2026</div>
+    <a class="btn" href="https://parlaysaka.com/">LOGIN</a>
+  </div>
+  <div class="card">
+    <img src="https://blogger.googleusercontent.com/img/a/AVvXsEgLcAilmooBcyPUv6mz6e1M73GFAJYMeT-5BRkVacmoVuX034SvAlGXuHw5rfOcP6tKab4XOFFcZgyPD9EO6XIPWgrbH73dwBRgzs2SJ5f-I9_Egp0IFoFznxWQFTHdeu-is7jE_tRs39k5vJ2txmzFLDN42GY_O5maawNXR3nbae4MdOVJA1TmrWdiaFnp" onclick="zoomImg(this)">
+	<img src="https://blogger.googleusercontent.com/img/a/AVvXsEheV087nVXJ2RYU-x6qZyZpG8qRUcJuZv_qn3C5kXb68qdqPZduF74e3VRHRmwrxAVPt3AhTLvnNluZSwLgRV0GqWNS_y_Hea95T6QaYlMHJDwLnJ4snpBTN7ZnNFGGdXmzYKV7wdj-_9Eur7C_189fIDWFbj7gxPkHlAiZJ4j1963fnNwD378N3pi_TzHM" onclick="zoomImg(this)">
+    <h3>GATES OF OLYMPUS SUPER SCATTER BUY SPIN 10JT JACKPOT 100.795.000,00 JUTA ! </h3>
+    <div class="card-date">📅 Update: 11 Juni 2026</div>
+    <a class="btn" href="https://parlaysaka.com/">LOGIN</a>
+  </div>
+  <div class="card">
+    <img src="https://blogger.googleusercontent.com/img/a/AVvXsEhDebyU851P3mhZ5LGuMN7CmX_Q52LuQ79qXtVn20IJqbP4c-cnadOsO6bu1oU4dkEe5lmg61zd9uSL7QmtTUJnRkLifbZWO8Uc2G6f9eefyNWYGX9W7Xpi9C3TZPMo6hwvJTWC712eO_vx60cARmpWE-x6L32oomv6sp1Wqh8Jgxsw582vrXXlSAMZdSIx" onclick="zoomImg(this)">
+	<img src="https://blogger.googleusercontent.com/img/a/AVvXsEhDebyU851P3mhZ5LGuMN7CmX_Q52LuQ79qXtVn20IJqbP4c-cnadOsO6bu1oU4dkEe5lmg61zd9uSL7QmtTUJnRkLifbZWO8Uc2G6f9eefyNWYGX9W7Xpi9C3TZPMo6hwvJTWC712eO_vx60cARmpWE-x6L32oomv6sp1Wqh8Jgxsw582vrXXlSAMZdSIx" onclick="zoomImg(this)">
+    <h3>MAHJONG WAYS 1 BET 800 JACKPOT 2.840.210,00 JUTA ! </h3>
+    <div class="card-date">📅 Update: 11 Juni 2026</div>
+    <a class="btn" href="https://parlaysaka.com/">LOGIN</a>
+  </div>
+
+  <div class="card">
+    <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiUYjCKtb7gxuQU0JUxMInYqAmyaz1QdkpgHO8ST62ukJLez_E_JypiZqRjhqtiGuBmwH9c0uRwWlkh1nack5qIw_TyMxf7PausRQWT_ZC06l4Pw3y3yuavf2Vqr5Jvy2JrdmKmP328ZMRjnrLe8pv3lbuCaWxKwRITnX7ooWyGEOgeEteNTFQp9M36iMsA" onclick="zoomImg(this)">
+	<img src="https://blogger.googleusercontent.com/img/a/AVvXsEiUYjCKtb7gxuQU0JUxMInYqAmyaz1QdkpgHO8ST62ukJLez_E_JypiZqRjhqtiGuBmwH9c0uRwWlkh1nack5qIw_TyMxf7PausRQWT_ZC06l4Pw3y3yuavf2Vqr5Jvy2JrdmKmP328ZMRjnrLe8pv3lbuCaWxKwRITnX7ooWyGEOgeEteNTFQp9M36iMsA" onclick="zoomImg(this)">
+    <h3>WILD BOUNTY SHOWDOWN BET 4000 JACKPOT 16.185.360,00 JUTA ! </h3>
+    <div class="card-date">📅 Update: 11 Juni 2026</div>
+    <a class="btn" href="https://parlaysaka.com/">LOGIN</a>
+  </div>
+  <div class="card">
+    <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjJQOHDuc5OcqHI0o2wpmny6vmsK4yupCo-Ap17iG3km3BsPmeFayyIh9eIQakqRSds3znQmQ8LMJQ1VOPl3JK0XHP2iR7SbkWvBs8-5-6Dut4Sxkc47UicitHOrxJincJ3aP7KZ-cjwfc7TzvNzY2zNRFNHzKyUGI7R1rsMWgLe7Syyr3Qz1uv9wVE76P4" onclick="zoomImg(this)">
+	<img src="https://blogger.googleusercontent.com/img/a/AVvXsEhbdSTAPlcQmu8G0FT2CYTDPFgJ1-vPqAhDeJzEu1vXBTj69lodkwK4Z1QJCT5HZe-evuuHWA8WzM0XJtLLWXnGCWgWFxFcB5k8R-NYIYrPX2jX8zb1Ls9R6mgbyjUkbT10lRFmGT7GZc64LFFfkGIfgxBxHaMTXuBW-J0YuykV9N7Vgt2qaxdYR2rsUps-" onclick="zoomImg(this)">
+    <h3>GATES OF OLYMPUS SUPER SCATTER FREESPIN JADI 9.444.000,00 JUTA ! </h3>
+    <div class="card-date">📅 Update: 11 Juni 2026</div>
+    <a class="btn" href="https://parlaysaka.com/">LOGIN</a>
+  </div>
+  <div class="card">
+    <img src="https://blogger.googleusercontent.com/img/a/AVvXsEhuefr8UhWDkWQLLt8D0Aq_8THWIrEVqhHqFqfEtzBdnKnpp7Uqdq0NxSYvh_L1dO-MDveC7qK74Vq_QHbuhsveeEBdqlUwddtwEFrxz2ItSAsJx420pUhvv1n9WATu68ASnY2uA3fmRKs-T2F6b4yJc-r_5S9LHo4yb7Qx_BC8T1OO3x73Eg0C_rGjeNSM" onclick="zoomImg(this)">
+	<img src="https://blogger.googleusercontent.com/img/a/AVvXsEjkVTHS0GFPjyJNhrO623OGw41hjUeI3OE2o-IoLhebCyqDJhLsrhV6W821iHzvaqIA3jTc27nFnArxwt-V9ZMJdfFoQd4_ZrYiLly1sYtHwmZhpWdyVbmOjqRwOMnz4SYt3X2RgmKY7qJmaTCm67KPUYT8qesTvOm2DG_5tUkBom9mL2KYsSKvNWwA402m" onclick="zoomImg(this)">
+    <h3>WISDOM ATHENA 1000 FREESPIN JADI 8.448.000,00 JUTA ! </h3>
+    <div class="card-date">📅 Update: 11 Juni 2026</div>
+    <a class="btn" href="https://parlaysaka.com/">LOGIN</a>
+  </div>
+  <div class="card">
+    <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiphKNlicM_O31YVsRiL43mvfKMImY78IuzEgde8arZ2oOO-_1zjF5r7bmnhGASqwEu1VByF5SA0fJs3A3iP2MbtyaGDmhcY4UE8KNMgFDNOhtszP9jLig2gWmlDS35cmg3U78rEFTOZWsKBU9q5NAuVLs3Pc7JQxAa0_ZQukAobJ2M5fEH6CQbO-h42WvC" onclick="zoomImg(this)">
+	<img src="https://blogger.googleusercontent.com/img/a/AVvXsEgTq2EPNStP7qJg1U8ehxSKGu7wd3svPikGIljganP7WAHQ7zqZXeHEphDNwv7e2OsyH7JtrbfHw4MJycTGFMZEjFygqbd9dxNRAL9Pakfa70l9s-gDfHOjqY221b8jWYv-Y0aYeLSkxfFH9Da4FbKJgIATmEETUqatNX8wsTKmCqoOmJlojiFod9R_55Px" onclick="zoomImg(this)">
+    <h3>5 LION MEGAWAYS BUY SPIN 200RB JADI 7.522.300,00 JUTA ! </h3>
+    <div class="card-date">📅 Update: 11 Juni 2026</div>
+    <a class="btn" href="https://parlaysaka.com/">LOGIN</a>
+  </div>
+  <div class="card">
+    <img src="https://blogger.googleusercontent.com/img/a/AVvXsEj-KDtcaeWW6P4z-QlDqRai41E5pB6NuTak8oUQTlgvJ5h-ym55KXOMkz__nn3Oyn0BWYvjd7nnKKcf6UCzyB_hyLTspJ73JDG6W7l-Zot-NuwiL-wSCl9h1fflFAKV0MABmsy6Bu97jvRIK9-1K8Bfn-79EHqjF51GknW3H8YOal-n5rmbkB2P1LyY2VR5" onclick="zoomImg(this)">
+	<img src="https://blogger.googleusercontent.com/img/a/AVvXsEj-KDtcaeWW6P4z-QlDqRai41E5pB6NuTak8oUQTlgvJ5h-ym55KXOMkz__nn3Oyn0BWYvjd7nnKKcf6UCzyB_hyLTspJ73JDG6W7l-Zot-NuwiL-wSCl9h1fflFAKV0MABmsy6Bu97jvRIK9-1K8Bfn-79EHqjF51GknW3H8YOal-n5rmbkB2P1LyY2VR5" onclick="zoomImg(this)">
+    <h3>LUCKY NEKO BUY SPIN JADI 45.251.380,00 JUTA ! </h3>
+    <div class="card-date">📅 Update: 11 Juni 2026</div>
+    <a class="btn" href="https://parlaysaka.com/">LOGIN</a>
+  </div>
+  <div class="card">
+    <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiphKNlicM_O31YVsRiL43mvfKMImY78IuzEgde8arZ2oOO-_1zjF5r7bmnhGASqwEu1VByF5SA0fJs3A3iP2MbtyaGDmhcY4UE8KNMgFDNOhtszP9jLig2gWmlDS35cmg3U78rEFTOZWsKBU9q5NAuVLs3Pc7JQxAa0_ZQukAobJ2M5fEH6CQbO-h42WvC" onclick="zoomImg(this)">
+	<img src="https://blogger.googleusercontent.com/img/a/AVvXsEgTq2EPNStP7qJg1U8ehxSKGu7wd3svPikGIljganP7WAHQ7zqZXeHEphDNwv7e2OsyH7JtrbfHw4MJycTGFMZEjFygqbd9dxNRAL9Pakfa70l9s-gDfHOjqY221b8jWYv-Y0aYeLSkxfFH9Da4FbKJgIATmEETUqatNX8wsTKmCqoOmJlojiFod9R_55Px" onclick="zoomImg(this)">
+    <h3>MAHJONG WAYS 1 FREESPIN JACKPOT JADI 65.741.750,00 JUTA ! </h3>
+    <div class="card-date">📅 Update: 11 Juni 2026</div>
+    <a class="btn" href="https://parlaysaka.com/">LOGIN</a>
+  </div>
+
+</div>
+
+<div class="pagination" id="pagination"></div>
+
+<div class="lightbox" id="lightbox" onclick="closeZoom()">
+  <span class="close-btn">&times;</span>
+  <img id="lightbox-img" src="">
+</div>
+
+<footer>
+  © 2015 - 2026 PARLAY388 | All Rights Reserved
+</footer>
+
+<script>
+  const cardsPerPage = 6; 
+  const maxPages = 2; 
+  const cards = document.querySelectorAll('#product-container .card');
+  const paginationContainer = document.getElementById('pagination');
+
+  function showPage(page) {
+    const start = (page - 1) * cardsPerPage;
+    const end = start + cardsPerPage;
+
+    cards.forEach((card, index) => {
+      if (index >= start && index < end) {
+        card.classList.add('show');
+      } else {
+        card.classList.remove('show');
+      }
+    });
+
+    document.querySelectorAll('.pagination button').forEach((btn, index) => {
+      if (index === page - 1) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+    
+    window.scrollTo({top: 150, behavior: 'smooth'});
+  }
+
+  for (let i = 1; i <= maxPages; i++) {
+    const button = document.createElement('button');
+    button.innerText = `Halaman ${i}`;
+    button.addEventListener('click', () => showPage(i));
+    paginationContainer.appendChild(button);
+  }
+
+  if(cards.length > 0) {
+    showPage(1);
+  }
+
+  /* ZOOM GAMBAR */
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+
+  function zoomImg(element) {
+    lightbox.style.display = 'flex';
+    lightboxImg.src = element.src;
+  }
+
+  function closeZoom() {
+    lightbox.style.display = 'none';
+  }
+
+  /* ================= SCRIPT ANTI-F12, ANTI-CTRL+U, DLL ================= */
+  document.onkeydown = function(e) {
+    // Blokir F12
+    if (e.keyCode == 123) {
+      return false;
+    }
+    // Blokir Ctrl+Shift+I (Inspect Element)
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+      return false;
+    }
+    // Blokir Ctrl+Shift+C (Inspect Element Mode Target)
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
+      return false;
+    }
+    // Blokir Ctrl+Shift+J (Console)
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+      return false;
+    }
+    // Blokir Ctrl+U (View Source)
+    if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+      return false;
+    }
+    // Blokir Ctrl+S (Save Page)
+    if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) {
+      return false;
+    }
+  };
+</script>
+<!-- Start of  Zendesk Widget script -->
+<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=1f7b1b1f-ba1a-4b16-a2cc-06a3bf2e4fd1"> </script>
+<!-- End of  Zendesk Widget script -->
+</body>
+</html>
