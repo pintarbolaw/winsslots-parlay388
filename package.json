@@ -1,0 +1,12 @@
+{
+  "name": "winsslots-parlay388",
+  "version": "1.0.0",
+  "description": "JP HARIAN SLOT - Daily Maxwin Harian",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'No build step needed for static HTML'"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.1.1"
+  }
+}
